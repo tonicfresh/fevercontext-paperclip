@@ -22,6 +22,14 @@ if [ "$(id -g node)" -ne "$PGID" ]; then
     changed=1
 fi
 
+# Pre-create directories Claude Code expects (avoids EACCES on first run)
+mkdir -p /paperclip/.claude/session-env \
+         /paperclip/.claude/sessions \
+         /paperclip/.claude/projects \
+         /paperclip/.claude/statsig \
+         /paperclip/.claude/todos \
+         /paperclip/.claude/plans
+
 # Always ensure volume ownership is correct (files may be created as root)
 chown -R node:node /paperclip
 
